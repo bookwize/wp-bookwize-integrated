@@ -1,0 +1,383 @@
+<div data-bind="if: popup().data() !== false">
+    <div class="modal-dialog" data-bind="with: popup().data">
+        <div class="modal-content">
+            <section class="modal-body ">
+
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+
+                    <header class="room-header">
+                        <span data-bind="text: info().name"></span>
+                        <span data-bind="visible: alternativeBoard()">
+                            <span class="instead-of-board">
+                                <i class="fa fa-exclamation-circle"></i>
+                                <span data-bind="translate: 'antautou'"></span>: <span data-bind="translate: boardType()"></span>
+                            </span>
+                        </span>
+                    </header>
+
+                </div>
+
+                <div role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-pills" role="tablist">
+                        <li role="presentation" class="active">
+                            <a data-bind="translate: 'popup.roomInfo'" href="#popup-room-info" aria-controls="popup-room-info" role="tab" data-toggle="pill"></a>
+                        </li>
+                        <li role="presentation">
+                            <a data-bind="translate: 'popup.availability'" href="#popup-availability" aria-controls="popup-availability" role="tab" data-toggle="pill"></a>
+                        </li>
+                        <!-- ko foreach: rateplans -->
+                        <li role="presentation" data-bind="visible: isVisible, click: $parent.setRatePlanId">
+                            <a data-bind="translate: info().name(), attr: { 'data-rateplan-id' : ratePlanId(),  href: '#popup-rateplan-' + ratePlanId(), 'aria-controls' : 'popup-rateplan-' + ratePlanId() }" role="tab" data-toggle="pill"></a>
+                        </li>
+                        <!-- /ko -->
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="popup-room-info">
+                            <div data-bind="template: { name: 'template-popup-room-info' }"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="popup-availability">
+                            <div data-bind="template: { name: 'template-popup-availability' }"></div>
+                        </div>
+                        <!-- ko foreach: rateplans -->
+                        <div role="tabpanel" class="tab-pane fade rateplan" data-bind="visible: isVisible, attr: { 'id' : 'popup-rateplan-' + ratePlanId() }">
+                            <div data-bind="template: { name: 'template-popup-rateplan' }"></div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="template-popup-room-info">
+
+    <aside class="gallery">
+
+        <div data-bind="foreach: info().photos, cycle: true"
+             data-cycle-slides=".slide"
+             data-cycle-speed="500"
+             data-cycle-timeout="0"
+             data-cycle-fx="fade"
+             data-cycle-log="false"
+             data-cycle-next=".popup .gallery .slide-next"
+             data-cycle-prev=".popup .gallery .slide-prev">
+
+            <!-- ko if: (type.toLowerCase().indexOf('rooms') != -1) -->
+            <div class="slide">
+                <div class="image-holder">
+                    <div data-bind="backgroundImage: url, backgroundImageOptions: {width:770, height:400, mode:'crop'}" class="image"></div>
+                </div>
+            </div>
+            <!-- /ko -->
+
+        </div>
+
+        <div data-bind="if: info().photos.length == 0">
+            <div class="slide">
+                <div class="image-holder">
+                    <div data-bind="backgroundImage: IBEConfig.roomBackgroundImage, backgroundImageOptions: {width:770, height:400, mode:'crop'}" class="image"></div>
+                </div>
+            </div>
+        </div>
+
+        <span data-bind="if: info().photos.length > 1">
+            <span class="slide-prev">
+                <span class="bg"></span>
+                <i class="fa fa-angle-left"></i>
+            </span>
+
+            <span class="slide-next">
+                <span class="bg"></span>
+                <i class="fa fa-angle-right"></i>
+            </span>
+        </span>
+
+    </aside>
+
+    <div class="panel-group" id="accordion-1">
+
+        <div class="panel panel-default" data-bind="visible: info().description != ''">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion-1" href="#accordion-1-collapse-1">
+                        <span data-bind="translate: 'description'"></span>
+                        <i class="fa fa-caret-down" style="display: none;"></i>
+                        <i class="fa fa-caret-up" style="display: block;"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="accordion-1-collapse-1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div data-bind="html: info().description"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" data-bind="visible: info().facilities.length > 0">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion-1" href="#accordion-1-collapse-2">
+                        <span data-bind="translate: 'amenities'"></span>
+                        <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-caret-up"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="accordion-1-collapse-2" class="panel-collapse collapse">
+                <div class="panel-body">
+
+                    <div data-bind="visible: info().attributes.length > 0">
+                        <div class="clearfix room-attributes" data-bind="foreach: info().attributes">
+                            <div data-bind="visible: value != ''">
+                                <div class="col-md-6">
+                                    <strong data-bind="translate: code"></strong>
+                                </div>
+                                <div class="col-md-6">
+                                    <div data-bind="html: value"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+
+                    <ul data-bind="foreach: info().facilities" class="facilities-list clearfix">
+                        <li class="col-md-6">
+                            <i class="fa fa-angle-right"></i>
+                            <span data-bind="text: name"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default" data-bind="visible: $parent.popup().hasFloorplan">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion-1" href="#accordion-1-collapse-3">
+                        <span data-bind="translate: 'floorplan'"></span>
+                        <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-caret-up"></i>
+                    </a>
+                </h4>
+            </div>
+            <div id="accordion-1-collapse-3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="floorplan text-center">
+                        <span data-bind="foreach: info().photos">
+                            <!-- ko if: (type.toLowerCase().indexOf('floorplan') != -1) -->
+                            <img data-bind="src: url() + '?width=600'" />
+                            <!-- /ko -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</script>
+
+<script type="text/html" id="template-popup-availability">
+
+    <div class="room-availability">
+
+        <div class="availability-calendars" id="AvailabilityCalendar" data-bind="availabilityCalendar: [$parent.bookingProcess().checkIn(), $parent.bookingProcess().checkOut()], lang: $parent.lang"></div>
+
+        <div class="row">
+            <div class="col-md-6 availability-legend no-padding">
+                <div class="col-md-6">
+                    <div class="col-md-2 available"></div>
+                    <div class="col-md-8" data-bind="translate: 'availableDates'"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-2 selected"></div>
+                    <div class="col-md-8" data-bind="translate: 'selectedDates'"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <div class="col-md-2 not-available"></div>
+                    <div class="col-md-8" data-bind="translate: 'noAvailablity'"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-2 last-room"></div>
+                    <div class="col-md-8" data-bind="translate: 'lastRoom'"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</script>
+
+<script type="text/html" id="template-popup-rateplan">
+
+    <div data-bind="visible: ($parent.ratePlanId() == ratePlanId())">
+
+        <div class="panel-group" data-bind="attr: { id : 'rateplan-'+$index() }">
+            <div class="panel panel-default" data-bind="visible : info().description != ''">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-bind="attr: { 'data-parent' : '#rateplan-'+$index(), href : '#rateplan-'+$index()+'-collapse-1' }">
+                            <span data-bind="translate: 'description'"></span>
+                            <i class="fa fa-caret-down" style="display: none;"></i>
+                            <i class="fa fa-caret-up" style="display: block;"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div data-bind="attr: { id : 'rateplan-'+$index()+'-collapse-1' }" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="rateplan-description" data-bind="html: info().description"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- standard rate offer texts -->
+            <!-- ko foreach: roomBoards() -->
+            <div class="panel panel-default" data-bind="visible : offers().length > 0 && isSelected">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-bind="attr: { 'data-parent' : '#rateplan-'+$index(), href : '#rateplan-'+$index()+'-collapse-1' }">
+                            <span data-bind="translate: 'description'"></span>
+                            <i class="fa fa-caret-down" style="display: none;"></i>
+                            <i class="fa fa-caret-up" style="display: block;"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div data-bind="attr: { id : 'rateplan-'+$index()+'-collapse-1' }" class="panel-collapse collapse in">
+                    <div class="panel-body">
+
+                        <div data-bind="foreach: offers()">
+                            <article>
+                                <strong data-bind="text: name"></strong>
+                                <div class="rateplan-description" data-bind="html: description"></div>
+                            </article>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /ko -->
+            <div class="panel panel-default rate-breakdown">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-bind="attr: { 'data-parent' : '#rateplan-'+$index(), href : '#rateplan-'+$index()+'-collapse-2' }">
+                            <span data-bind="translate: 'dailyBreakDown'"></span>
+
+                            <span class="stay-period">
+                                <span data-bind="date: $parents[1].bookingProcess().checkIn(), dateFormat : 'MMM Do YYYY'"></span> -
+                                <span data-bind="date: $parents[1].bookingProcess().checkOut(), dateFormat : 'MMM Do YYYY'"></span>
+                            </span>
+
+                            <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-caret-up"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div data-bind="attr: { id : 'rateplan-'+$index()+'-collapse-2' }" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <table class="breakdown-table table">
+                            <thead>
+                                <tr>
+                                    <th class="week"></th>
+                                    <th data-bind="translate: 'weekdays.MON'"></th>
+                                    <th data-bind="translate: 'weekdays.TUE'"></th>
+                                    <th data-bind="translate: 'weekdays.WED'"></th>
+                                    <th data-bind="translate: 'weekdays.THU'"></th>
+                                    <th data-bind="translate: 'weekdays.FRI'"></th>
+                                    <th data-bind="translate: 'weekdays.SAT'"></th>
+                                    <th data-bind="translate: 'weekdays.SUN'"></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: rateBreakDown().weeks">
+                                <tr>
+                                    <td class="week">
+                                        <span data-bind="translate: 'week'"></span>
+                                        <span data-bind="text: ($index()+1)"></span>
+                                    </td>
+                                    <!-- ko foreach: $data -->
+                                    <td data-bind="attr : { 'class' : status }">
+                                        <div class="cell">
+                                            <div data-bind="text: date.format('DD/MM')" class="date"></div>
+                                            <div data-bind="money: price, visible: price > 0" class="price"></div>
+                                        </div>
+                                    </td>
+                                    <!-- /ko -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default" data-bind="visible: info().cancellationRules.length > 0 || info().paymentRules.length > 0">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-bind="attr: { 'data-parent' : '#rateplan-'+$index(), href : '#rateplan-'+$index()+'-collapse-3' }">
+                            <span data-bind="translate: 'polices'"></span>
+                            <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-caret-up"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div data-bind="attr: { id : 'rateplan-'+$index()+'-collapse-3' }" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul data-bind="foreach: info().paymentRules">
+                            <li data-bind="html: text"></li>
+                        </ul>
+                        <hr />
+                        <ul data-bind="foreach: info().cancellationRules">
+                            <li data-bind="html: text"></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="total-price">
+
+                <div class="total" data-bind="visible: price() > 0, money: price()"></div>
+
+                <div class="daily">
+                    <span data-bind="visible: (averageDailyRate() > 0)">
+                        <span class="price" data-bind="money: averageDailyRate"></span> / <span data-bind="translate: 'night'"></span>
+                    </span>
+                    <span class="text" data-bind="visible: (averageDailyRate() <= 0), translate: 'rateNotAvailable'"></span>
+                </div>
+
+            </div>
+
+
+            <div data-bind="visible: bookingAction() > 0" class="booking-action text-center">
+
+                <div class="book-room-button" data-bind="click: $parent.setRatePlanId, css: { 'remaining-rooms-active' : ($root.popup().data().availableRooms > 1 && $root.popup().data().availableRooms <= 3) }">
+                    <div class="col-xs-4 col-xs-offset-4">
+                        <button class="btn btn-book btn-block" data-bind="click: IBEStepsMain.popup.close, css: { 'last-room' : $root.popup().data().availableRooms == 1}">
+                            <span data-bind="translate: 'button.SelectRoom'"></span>
+                        </button>
+                        <div data-bind="visible: $root.popup().data().availableRooms > 0 && $root.popup().data().availableRooms <= 3">
+		                    <div class="remaining-rooms">
+		                        <span data-bind="text: $root.popup().data().availableRooms"></span>
+		                        <!-- ko if: $root.popup().data().availableRooms == 1 -->
+								<span data-bind="translate: 'roomRemaining'"></span>
+								<!-- /ko -->
+								<!-- ko if: $root.popup().data().availableRooms > 1 -->
+								<span data-bind="translate: 'roomsRemaining'"></span>
+								<!-- /ko -->                        
+		                    </div>
+		                </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                
+            </div>
+
+        </div>
+    </div>
+
+</script>

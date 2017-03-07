@@ -1,0 +1,55 @@
+<div class="container" data-bind="if: ready()">
+
+    <div id="Step1-Preferences"></div>
+    <script type="text/html" data-target="#Step1-Preferences"
+            src="partials/templates/step1_preferences.html"></script>
+
+    <div data-bind="if: hotel()" class="no-select">
+
+        <div class="row" data-bind="if: hotel().offers.length > 0">
+            <div class="col-md-12">
+                <section class="step1-offers">
+
+                    <header class="offers-header" data-bind="translate: 'ourOfferPackages'"></header>
+
+                    <div class="offers-inner">
+                        <div data-bind="foreach: hotel().offers, cycle: true"
+                             data-cycle-slides=".slide"
+                             data-cycle-speed="500"
+                             data-cycle-timeout="0"
+                             data-cycle-fx="fade"
+                             data-cycle-log="false"
+                             data-cycle-next=".slide-prev"
+                             data-cycle-prev=".slide-next"
+                             class="ibe-cycle-slideshow">
+
+                            <article data-bind="attr: { 'data-id' : id }" class="slide clearfix">
+
+                                <div data-bind="visible: photos.length > 0" class="col-md-6 no-padding image">
+                                    <aside data-bind="foreach: photos">
+                                        <img data-bind="if: url() != '', attr: { alt : $parent.name, src : url() + '?width=527&height=335&mode=crop&scale=both&anchor=middlecenter' }"/>
+                                    </aside>
+                                </div>
+
+                                <div data-bind="css : { 'col-md-6 no-padding description' : (photos.length > 0), 'col-md-12 description' : (photos.length == 0)}">
+                                    <div class="text-container">
+                                        <header data-bind="html: name" class="text-center"></header>
+                                        <div data-bind="html: description"></div>
+                                    </div>
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                        <span class="slide-prev"><i class="fa fa-angle-left"></i></span>
+                        <span class="slide-next"><i class="fa fa-angle-right"></i></span>
+                    </div>
+
+                </section>
+
+            </div>
+        </div>
+
+    </div>
+</div>

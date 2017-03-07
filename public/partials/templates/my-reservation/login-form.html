@@ -1,0 +1,47 @@
+<section class="login">
+
+	<header class="reservation-title text-center">
+		<span data-bind="translate: 'manageReservation'"></span>
+	</header>
+
+	<div class="horizontal-line-arrow">
+		<div class="arrow"></div>
+	</div>
+
+	<div class="clearfix" data-bind="validationOptions: { messageTemplate: 'IBEValidationMessage' }">
+                  
+		<div class="clearfix" data-bind="visible: hasMessage()">
+			<div class="col-sm-12">
+				<div class="message">
+					<p data-bind="css: 'alert alert-' + (message().severity() == 'error' ? 'danger' : message().severity())">
+						<span data-bind="text: message().text()"></span>
+					</p>
+				</div>
+			</div>
+		</div>
+        
+		<div class="col-md-6">
+			<p data-bind="translate: 'myReservation.LoginPrompt'"></p>
+			<p data-bind="translate: 'myReservation.CredentialsInfo'"></p>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-group">
+				<label for="username" data-bind="translate: 'label_customeremail'"></label>
+				<input id="username" data-bind="value: username" type="text" name="username" class="form-control required">
+			</div>
+			<div class="form-group">
+				<label for="password" data-bind="translate: 'label_customerpassword'"></label>
+				<input id="password" data-bind="value: password" type="text" name="password" class="form-control required">
+			</div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="col-md-12">
+			<div class="form-group text-right">
+				<button type="button" class="btn btn-primary btn-login" data-bind="click: login, translate: 'login'"></button>
+			</div>
+		</div>
+	</div>
+</section>

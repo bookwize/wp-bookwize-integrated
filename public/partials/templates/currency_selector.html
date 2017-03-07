@@ -1,0 +1,18 @@
+<div data-bind="if: currencies()" class="arrow main-header">
+	<div class="btn-group currency">
+		<button type="button" role="button" class="btn btn-xs dropdown-toggle"
+						data-toggle="dropdown">
+			<span data-bind="text: currency()"></span> <span class="caret"></span>
+		</button>
+		<div class="dropdown-holder dropdown-menu right">
+			<ul data-bind="foreach: currencies().rates" class="dropdown-menu-inner">
+				<li data-bind="css: {'active' : code == $parent.currency()}, click: function(){$root.currency($data.code)}">
+					<div class="clearfix">
+						<div class="col-sm-2 no-padding code" data-bind="text: code"></div>
+						<div class="col-sm-10 no-padding name" data-bind="text: name"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

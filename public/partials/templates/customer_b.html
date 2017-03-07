@@ -1,0 +1,246 @@
+<section class="booking-form">
+
+	<script id="IBEValidationMessage" type="text/html">
+		<div class="alert alert-danger validation-message" data-bind="validationMessage: field"></div>
+	</script>
+
+	<div class="col-md-10 col-md-offset-1">
+
+		<aside class="help-block">
+			<p><span data-bind="translate :'requriedFields'"></span></p>
+		</aside>
+
+		<form role="form" data-bind="with: customer" method="post">
+
+			<fieldset data-bind="validationOptions: { messageTemplate: 'IBEValidationMessage' }">
+
+				<legend data-bind="translate: 'guestDetails'"></legend>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group required">
+							<label for="CustomerFirstName" data-bind="translate: 'label_firstName'"></label>
+							<input id="CustomerFirstName" data-bind="value: firstName" type="text" name="customer_firstname" class="form-control">
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group required">
+							<label for="CustomerLastName" data-bind="translate: 'label_lastName'"></label>
+							<input id="CustomerLastName" data-bind="value: lastName" type="text" name="customer_lastname" class="form-control">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group required">
+							<label for="CustomerEmail" data-bind="translate: 'label_email'"></label>
+							<input id="CustomerEmail" data-bind="value: email" type="email" name="customer_email" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group required">
+							<label for="CustomerPhone" data-bind="translate: 'label_phone'"></label>
+							<input id="CustomerPhone" data-bind="value: phone" type="text" name="customer_phone" class="form-control">
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group required">
+							<label for="CustomerCountry" data-bind="translate: 'label_country'"></label>
+							<select id="CustomerCountry" data-bind="options: $root.countries, optionsText: 'name', value: country, optionsCaption: IBE.Utils.translate('Select your country')" class="form-control"></select>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="CustomerAddress" data-bind="translate: 'label_address'"></label>
+							<input id="CustomerAddress" data-bind="value: address" type="text" name="customer_address" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="CustomerCity" data-bind="translate: 'label_city'"></label>
+							<input id="CustomerCity" data-bind="value: city" type="text" name="customer_city" class="form-control">
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="CustomerZipCode" data-bind="translate: 'label_zipCode'"></label>
+							<input id="CustomerZipCode" data-bind="value: zip" type="text" name="customer_zipcode" class="form-control number">
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="col-sm-6" data-bind="visible: $root.bookingProcess().isOnline()">
+						<div class="form-group">
+							<label for="PaymentReceipt" data-bind="translate: 'label_paymentReceipt'"></label>
+							<select id="PaymentReceipt" data-bind="options: paymentReceiptOptions, optionsText: 'text', value: paymentReceipt" name="payment_receipt" class="form-control"></select>
+						</div>
+					</div>
+				</div>
+
+				<div data-bind="visible: paymentReceipt().name == 'companyInvoice', with: company()">
+					<div class="row">
+						<div class="horizontal-line-arrow"><div class="arrow"></div></div>
+					</div>
+
+					<fieldset>
+						<legend data-bind="translate: 'invoicing'"></legend>
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label for="CompanyName" data-bind="translate: 'label_companyName'"></label>
+									<input id="CompanyName" data-bind="value: name" type="text" name="company_name" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="CompanyIndustry" data-bind="translate: 'label_companyIndustry'"></label>
+									<input id="CompanyIndustry" data-bind="value: industry" type="text" name="company_industry" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label for="CompanyVatNumber" data-bind="translate: 'label_companyVatNumber'"></label>
+									<input id="CompanyVatNumber" data-bind="value: vatNumber" type="text" name="company_vat_number" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label for="CompanyAddress" data-bind="translate: 'label_companyAddress'"></label>
+									<input id="CompanyAddress" data-bind="value: address" type="text" name="company_address" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-4" data-bind="visible: $root.bookingProcess().isOnline()">
+								<div class="form-group">
+									<label for="CompanyZipCode" data-bind="translate: 'label_companyZipCode'"></label>
+									<input id="CompanyZipCode" data-bind="value: zipCode" type="text" name="company_zip_code" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-4" data-bind="visible: $root.bookingProcess().isOnline()">
+								<div class="form-group">
+									<label for="CompanyPhone" data-bind="translate: 'label_companyPhone'"></label>
+									<input id="CompanyPhone" data-bind="value: phone" type="text" name="company_phone" class="form-control">
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
+
+
+			</fieldset>
+
+			<div data-bind="visible: $root.bookingProcess().isOnline(), with: creditCard">
+
+				<div class="row">
+					<div class="horizontal-line-arrow"><div class="arrow"></div></div>
+				</div>
+
+				<fieldset data-bind="validationOptions: { messageTemplate: 'IBEValidationMessage' }">
+
+					<legend data-bind="translate: 'billingInformation'"></legend>
+					<p data-bind="text: $root.creditCardChargeText()" class="alert alert-info text-center"></p>
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-group required">
+								<label for="CustomerCardHolder" data-bind="translate: 'label_cardHolder'"></label>
+								<input id="CustomerCardHolder" data-bind="value: cardHolder" type="text" name="card_holder" class="form-control required">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="form-group required">
+								<label for="CustomerNumber" data-bind="translate: 'label_cardNumber'"></label>
+								<input id="CustomerNumber" data-bind="value: cardNumber" type="text" name="card_number" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="accepted-cards" data-bind="foreach: $parents[1].acceptedCards">
+								<img data-bind="src: 'https://ibe.blob.core.windows.net/images/'+ $data +'.png', attr: { alt : $data }, css: {'active' : $data.toLowerCase() == $parent.cardType() }">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-8 no-padding">
+							<div class="col-sm-4">
+								<div class="form-group required">
+									<label for="CardExpirationYear" data-bind="translate: 'label_expiryYear'"></label>
+									<select id="CardExpirationYear" data-bind="options: yearOptions(), value: cardExpirationYear" class="form-control required"></select>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group required">
+									<label for="CardExpirationMonth" data-bind="translate: 'label_expiryMonth'"></label>
+									<select id="CardExpirationMonth" data-bind="options: monthOptions(), value: cardExpirationMonth" class="form-control required"></select>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group required">
+									<label for="CardVerification" data-bind="translate: 'label_cvc'"></label>
+									<input id="CardVerification" value="111" data-bind="value: cardVerification" type="text" name="card_verification" class="form-control required" maxlength="4">
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+						<div class="col-sm-4">
+							<div class="ssl text-right">
+								<a href="https://seal.godaddy.com/verifySeal?sealID=7vQJ4rQFdsC8yOrNxRUGO4usyXWXUDOYP87dJysG4SvfsUPZyY0vhW8Zn0o" target="_blank">
+									<img src="https://ibe.blob.core.windows.net/images/ssl.gif" alt="SSL" />
+								</a>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+
+			<div class="row">
+				<div class="horizontal-line-arrow"><div class="arrow"></div></div>
+			</div>
+
+			<fieldset data-bind="validationOptions: { messageTemplate: 'IBEValidationMessage' }">
+
+				<div class="col-sm-10 col-sm-offset-1 no-padding" data-bind="visible: $root.hasMessage()">
+					<div class="message">
+						<div class="form-group">
+							<p data-bind="css: 'alert alert-' + ($root.message().severity() == 'error' ? 'danger' : $root.message().severity())">
+								<span data-bind="text: $root.message().text()"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" data-bind="if: $root.termsVisible()">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="form-group terms-conditions-holder">
+							<label class="clearfix">
+								<span class="terms-conditions-label" data-toggle="modal" data-target="#TermsConditions" data-bind="translate: 'acceptTermsConditions'"></span>
+								<input type="checkbox" class="required" data-bind="checked : acceptTerms" >
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<button class="btn btn-primary btn-block" data-bind="click: $root.makeReservation, translate: ($root.bookingProcess().isOnline()) ? 'completeReservation' : 'completeRequest' "></button>
+					</div>
+				</div>
+
+			</fieldset>
+
+		</form>
+
+	</div>
+	<div class="clearfix"></div>
+</section>

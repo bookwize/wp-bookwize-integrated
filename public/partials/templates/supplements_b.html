@@ -1,0 +1,100 @@
+<div class="clearfix" data-bind="if: supplements().length > 0 && showSupplements()">
+    <div class="col-md-10 col-md-offset-1">
+
+        <section class="supplements-holder">
+
+            <header data-bind="translate: 'reservationExtrasSupplements'" class="section-title text-center"></header>
+
+            <aside class="help-block">
+                <p data-bind="translate: 'supplementsLegendText'"></p>
+            </aside>
+
+            <table class="table">
+
+                <thead class="supplements-header">
+                    <tr>
+                        <th class="first">&nbsp;</th>
+                        <th data-bind="translate: 'price'"></th>
+                        <th data-bind="translate: 'select'"></th>
+                        <th data-bind="translate: 'total'" class="last text-right"></th>
+                    </tr>
+                </thead>
+
+                <!-- ko foreach: supplements -->
+
+                <tbody data-bind="foreach: supplementResults" class="supplements">
+                    <tr class="supplement" data-bind="visible: visible">
+                        <td class="name-holder text-left">
+
+                            <span data-bind="visible: description().length > 0" class="supplement-tooltip">
+                                <i class="fa fa-info-circle"></i>
+                            </span>
+
+                            <label class="supplement-name" data-bind="text: name, attr: { for : isUnique() ? 'supplement-'+supplementId() : '' }"></label>
+
+                            <p class="supplement-pricing">
+                                <span data-bind="translate: 'supplement.' + pricingTypeText()"></span>
+                                <span data-bind="visible: timePricingUnit() != 'OneOff'">
+                                    / <span data-bind="translate: 'supplement.' + timePricingUnit()"></span>
+                                </span>
+                            </p>
+
+                            <div class="supplement-description">
+                                <div data-bind="html: description"></div>
+                            </div>
+
+                        </td>
+
+                        <td class="price-holder text-center">
+                            <!-- ko foreach: prices -->
+                            <div data-bind="visible: price() > 0">
+                                <div class="price">
+                                    <span data-bind="money: price()"></span>
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </td>
+
+                        <td class="price-quantity-holder text-center no-select">
+                            <!-- ko foreach: prices -->
+                            <div data-bind="visible: price() > 0">
+                                <span class="info">
+                                    <!-- ko if: guestType.ageCategory -->
+                                    <span data-bind="translate: guestType.ageCategory"></span>
+                                    <!-- /ko -->
+                                </span>
+                                <div data-bind="visible: !$parent.isUnique()" class="quantity-btn-holder">
+                                    <button class="btn btn-xs" data-bind="click: removeSupplement, css: {'active' : quantity() > 0 }, visible: quantity() > minQuantity()">
+                                        <i class="fa fa-minus-circle"></i>
+                                    </button>
+                                    <input type="text" data-bind="value: quantity" class="quantity number" readonly="readonly">
+                                    <button class="btn btn-xs" data-bind="click: addSupplement, css: {'active' : quantity() < maxQuantity() }">
+                                        <i class="fa fa-plus-circle"></i>
+                                    </button>
+                                </div>
+
+                                <div data-bind="visible: $parent.isUnique()">
+                                    <input type="checkbox" class="supplement-unique"
+                                           data-bind="checked: isSelected, attr: { id : $parent.isUnique() ? 'supplement-'+$parent.supplementId() : '' }">
+                                </div>
+                            </div>
+                            <!-- /ko -->
+                        </td>
+
+                        <td class="total-holder text-right">
+                            <span data-bind="visible: totalPrice() > 0, money: totalPrice()"></span>
+                        </td>
+                    </tr>
+                </tbody>
+
+                <!-- /ko -->
+            </table>
+
+            <div class="row">
+                <div class="horizontal-line-arrow"><div class="arrow"></div></div>
+            </div>
+
+        </section>
+
+    </div>
+</div>

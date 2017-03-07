@@ -1,0 +1,39 @@
+<div data-bind="if: ready()">
+	<!-- <section class="steps anim no-select"> -->
+	<section class="steps no-select">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<div class="step active">
+						<a href="?page=1" data-bind="attr: {title : IBE.Utils.translate('step.planYourStay')}">
+							&nbsp;</a>
+	              <span class="number">
+	                  <span class="inner">1</span>
+	              </span>
+						<span class="text" data-bind="translate: 'step.planYourStay'"></span>
+					</div>
+
+					<div class="dots" data-dots="4"></div>
+
+					<div class="step inactive">
+						<a href="?page=2" data-bind="attr: {title : IBE.Utils.translate('step.rooms')}">&nbsp;</a>
+	                    <span class="number">
+	                        <span class="inner">2</span>
+	                    </span>
+						<span class="text" data-bind="translate: 'step.rooms'"></span>
+					</div>
+
+					<div class="dots" data-dots="4"></div>
+
+					<div class="step inactive">
+						<a href="?page=3" data-bind="attr: {title : IBE.Utils.translate('step.guestInfo')}"></a>
+	                    <span class="number">
+	                        <span class="inner">3</span>
+	                    </span>
+						<span class="text" data-bind="translate: 'step.guestInfo'"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

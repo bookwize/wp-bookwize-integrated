@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row clearfix">
+        <div class="rateplan-page col-xs-8 col-xs-offset-2">
+
+            <section class="col-xs-12">
+                <div data-bind="if: message && message().text != ''" class="message">
+                    <div data-bind="if: parseInt(message().id) != 3002">
+                        <p data-bind="text: message().text, css: 'alert alert-' + (message().severity == 'error' ? 'danger' : message().severity)"></p>
+                    </div>
+                </div>
+
+                <article class="rateplan text-center col-xs-10 col-xs-offset-1">
+
+
+                    <header class="title" data-bind="text: rateplan().name"></header>
+
+
+                    <aside class="summary clearfix">
+
+                        <div class="text" data-bind="html: rateplan().abstract"></div>
+
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <button class="btn btn-primary btn-block rateplan-book-btn" data-bind="translate: 'book'"></button>
+                        </div>
+
+                    </aside>
+
+                    <div class="body">
+
+                        <div data-bind="translate: 'offerIncludes'" class="body-title"></div>
+
+                        <div class="sep"></div>
+
+                        <div class="body-text" data-bind="html: rateplan().description"></div>
+
+                    </div>
+
+                    <div class="panel-group" id="accordion-1">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion-1" href="#accordion-1-collapse-1">
+                                        <span data-bind="translate: 'termsConditions'"></span>
+                                        <i class="fa fa-caret-down"></i>
+                                        <i class="fa fa-caret-up"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="accordion-1-collapse-1" class="panel-collapse collapse">
+                                <div class="panel-body" data-bind="foreach: rateplan().cancellationPolicy">
+                                    <p data-bind="html: text"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </article>
+
+            </section>
+
+        </div>
+    </div>
+</div>

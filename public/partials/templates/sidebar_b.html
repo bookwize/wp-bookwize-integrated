@@ -1,0 +1,148 @@
+<aside class="sidebar">
+
+	<header class="sidebar-header">
+		<span data-bind="translate: 'yourReservation'"></span>
+	</header>
+
+	<section class="sidebar-content">
+
+		<header class="sidebar-content-header">
+
+			<div class="clearfix">
+				<div class="label-bold col-md-5">
+					<span data-bind="translate: 'checkIn'"></span>:
+				</div>
+				<div class="col-md-7 check-in info" data-bind="date: checkIn(), dateFormat: 'DD/MM/YYYY'"></div>
+			</div>
+
+			<div class="clearfix">
+				<div class="label-bold col-md-5">
+					<span data-bind="translate: 'checkOut'"></span>:
+				</div>
+				<div class="col-md-7 check-out info">
+					<span data-bind="date: checkOut(), dateFormat: 'DD/MM/YYYY'"></span>
+				</div>
+			</div>
+
+			<div class="clearfix">
+				<div class="label-bold col-md-5">&nbsp;</div>
+				<div class="col-md-7 check-out info">
+
+					(<span data-bind="text: nights()"></span>)
+					<!-- ko if: nights() == 1 -->
+					<span data-bind="translate: 'night'"></span>
+					<!-- /ko -->
+					<!-- ko if: nights() > 1 -->
+					<span data-bind="translate: 'nights'"></span>
+					<!-- /ko -->
+				</div>
+			</div>
+		</header>
+
+		<section class="sidebar-content-rooms" data-bind="foreach: rooms">
+
+			<article class="sidebar-room media">
+
+				<div class="pull-left hidden-xs hidden-sm">
+					<div data-bind="if: roomInfo().photos[0]">
+						<img data-bind="src: roomInfo().photos[0].url() + '?width=100&height=80', attr: { alt : roomInfo().name }" class="media-object" />
+					</div>
+
+					<div data-bind="ifnot: roomInfo().photos[0]">
+						<img data-bind="src: IBEConfig.roomBackgroundImage + '?width=100&height=80', attr: { alt : roomInfo().name }" class="media-object" />
+					</div>
+				</div>
+
+				<div class="media-body">
+
+					<header class="media-heading label-bold" data-bind="text: roomInfo().name, attr: {lang: $root.lang} "></header>
+
+					<p>
+						<span data-bind="text: ratePlan().name, attr: {lang: $root.lang}"></span>
+						<br />
+						<span data-bind="text: board().name, attr: {lang: $root.lang}"></span>
+					</p>
+
+					<div class="info hidden-md hidden-sm hidden-xs" data-bind="foreach: guestTypes()">
+						<span data-bind="text: pax()"></span>
+
+
+						<span data-bind="if: pax() == 1">
+							<!-- ko if: $parent.guestTypes().length == 1 -->
+							<span data-bind="translate: 'guest'"></span>
+						<!-- /ko -->
+						<!-- ko if: $parent.guestTypes().length > 1 -->
+						<span data-bind="translate: ageCategory()"></span>
+						<!-- /ko -->
+						</span>
+						<span data-bind="if: pax() > 1">
+							<!-- ko if: $parent.guestTypes().length == 1 -->
+							<span data-bind="translate: 'guests'"></span>
+						<!-- /ko -->
+						<!-- ko if: $parent.guestTypes().length > 1 -->
+						<span data-bind="translate: 'guestType.' + ageCategory()"></span>
+						<!-- /ko -->
+						</span><span data-bind="if: ($index() + 1) != $parent.guestTypes().length">, </span>
+
+					</div>
+
+					<div class="prices">
+						<span class="before-discount"><span data-bind="visible: costWithoutDiscount() > cost(), money: costWithoutDiscount()" style="text-decoration: line-through;"></span></span>
+						<span data-bind="visible: costWithoutDiscount() > cost()" class="sep"></span>
+						<span class="final"><span data-bind="money: cost()"></span></span>
+					</div>
+
+				</div>
+
+			</article>
+
+		</section>
+
+		<div data-bind="if: supplements().length > 0">
+			<section class="sidebar-content-supplements" data-bind="foreach: supplements">
+
+				<article class="supplement clearfix">
+					<header class="supplement-title pull-left">
+						<span class="info">
+							<span data-bind="text: quantity"></span> &times;
+						</span>
+						<span data-bind="text: name, attr: {lang: $root.lang}"></span>
+					</header>
+
+					<div class="prices pull-right">
+						<span data-bind="money: totalPrice"></span>
+						<!-- ko foreach: prices -->
+						<span class="btn" data-bind="click: removeSupplement, visible: quantity() > minQuantity()">
+							<i class="fa fa-minus-circle"></i>
+						</span>
+						<!-- /ko -->
+					</div>
+
+				</article>
+
+			</section>
+		</div>
+
+		<footer class="sidebar-content-footer">
+
+			<section class="totals clearfix">
+
+				<header data-bind="translate: 'grandTotal'" class="pull-left"></header>
+
+				<div class="prices pull-right text-right">
+					<div class="total" data-bind="money: totalCost()"></div>
+				</div>
+
+			</section>
+
+		</footer>
+
+	</section>
+
+	<footer class="sidebar-footer">
+		<ul class="advance-payment" data-bind="html: cancellationPolicy"></ul>
+		<br />
+		<ul class="payment-rules" data-bind="html: paymentText"></ul>
+	</footer>
+
+</aside>

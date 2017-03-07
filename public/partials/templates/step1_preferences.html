@@ -1,0 +1,186 @@
+<div class="step1-content step1-content-d">
+    <div class="row">
+        <div data-bind="if: hotel()" class="col-md-10 col-md-offset-1">
+
+            <div class="main-content">
+
+                <div class="row">
+                    <div class="col-md-3 left-col">
+                        <aside class="text-right">
+                            <header data-bind="translate: 'step.planYourStay'" class="section-header"></header>
+                        </aside>
+                    </div>
+
+                    <div class="col-md-9 right-col">
+
+                        <div data-bind="visible: hasMessage()">
+                            <div data-bind="if: parseInt(message().id()) != 3001" class="message">
+                                <p data-bind="css: 'alert alert-' + (message().severity() == 'error' ? 'danger' : message().severity())">
+                                    <span data-bind="translate: message().text()"></span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row" data-bind="if: requestedRooms().length > 0">
+
+                            <div class="col-xs-6" data-bind="css: { 'col-md-offset-1 col-md-5' : requestedRooms()[0].guests.length < 4, 'col-md-6' : requestedRooms()[0].guests.length > 3 }">
+                                <div class="form-group">
+                                    <label for="CheckIn" data-bind="translate: 'checkIn'"></label>
+
+                                    <div class="datepicker-holder">
+                                        <input data-bind="datepicker: checkIn, bindMinDate: minCheckInDate(), lang: lang" readonly="readonly" id="CheckIn" class="form-control" required="required" data-arrow-offset="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6" data-bind="css: { 'col-md-5' : requestedRooms()[0].guests.length < 4, 'col-md-6' : requestedRooms()[0].guests.length > 3 }">
+                                <div class="form-group">
+                                    <label for="CheckOut" data-bind="translate: 'checkOut'"></label>
+
+                                    <div class="datepicker-holder">
+                                        <input data-bind="datepicker: checkOut, bindMinDate: minCheckOutDate(), lang: lang" readonly="readonly" id="CheckOut" class="form-control" required="required" data-arrow-offset="190">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div data-bind="if: !bookingProcess().isValidStay">
+                            <p class="alert alert-danger">
+                                <span data-bind="translate: 'invalidCheckOutDate'"></span>
+                            </p>
+                        </div>
+
+                        <div data-bind="visible: !isValidStay()">
+                            <div class="alert alert-warning">
+                                <span data-bind="translate: 'InvalidDateRange'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 left-col">
+                        <aside class="text-right text-sm-center">
+                            <header data-bind="translate: 'roomGuests'" class="section-header"></header>
+                        </aside>
+                    </div>
+
+                    <div class="col-md-9 right-col">
+                        <div data-bind="foreach: requestedRooms">
+                            <div class="request-room">
+                                <div class="row">
+
+                                    <!-- ko foreach: guests -->
+                                    <div class="col-md-3" data-bind="css: { 'col-md-offset-1' : $index() == 0 && $parent.guests.length < 4 }">
+                                        <div class="form-group">
+                                            <!-- ko if: $parent.guests.length > 1 -->
+                                            <label data-bind="translate: 'guestType.' + ageCategory()"></label>
+                                            <!-- /ko -->
+                                            <!-- ko if: $parent.guests.length == 1 -->
+                                            <label data-bind="translate: 'guests'"></label>
+                                            <!-- /ko -->
+                                            <span data-bind="if: label() != ''" class="guest-category-age">
+                                                (<span data-bind="translate: 'age'"></span> <span data-bind="text: label"></span>)
+                                            </span>
+                                            <select class="form-control" data-bind="options: options, value: pax"></select>
+                                        </div>
+                                    </div>
+                                    <!-- /ko -->
+
+                                    <!-- ko if: guests.length > 3 -->
+                                    <div class="clearfix"></div>
+                                    <!-- /ko -->
+
+                                    <div data-bind="visible: $root.requestedRooms().length > 1, css: { 'col-xs-2' : guests.length < 4 }" class="text-center">
+                                        <div class="form-group">
+                                            <!-- ko if: guests.length < 4 -->
+                                            <label>&nbsp;</label>
+                                            <br class="hidden-xs" />
+                                            <!-- /ko -->
+                                            <button type="button" class="btn-remove-room no-outline" data-bind="click: $root.removeRequestedRoom.bind($data), attr: {title : IBE.Utils.translate('removeRoom') }">
+                                                <i class="fa fa-times-circle"></i>
+                                                <span data-bind="translate: 'remove'"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn-add-room no-outline" data-bind="click: $root.addRequestedRoom, visible: $root.canAddRequestedRoom">
+                                <i class="fa fa-plus-circle"></i>
+                                <span data-bind="translate: 'addRoom'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-bind="visible: boardTypes().length > 1">
+                    <div class="row board-type">
+                        <div class="col-md-3 left-col">
+                            <aside class="text-right">
+                                <header data-bind="translate: 'selectMealPlan'" class="section-header"></header>
+                            </aside>
+                        </div>
+                        <div class="col-md-9 right-col">
+                            <div class="row" data-bind="if: requestedRooms().length > 0">
+                                <div data-bind="css: { 'col-md-offset-1 col-md-5' : requestedRooms()[0].guests.length < 4, 'col-md-6' : requestedRooms()[0].guests.length > 3 }">
+                                    <label></label>
+                                    <select class="form-control" data-bind="options: boardTypes, value: boardType, optionsValue: 'boardType', optionsText: 'name'"></select>
+                                </div>
+                                <div data-bind="css: { 'col-md-5' : requestedRooms()[0].guests.length < 4, 'col-md-6' : requestedRooms()[0].guests.length > 3 }">
+                                    <div data-bind="if: board">
+                                        <div data-bind="visible: board().description != ''">
+                                            <div data-bind="html: board().description"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div data-bind="visible: couponExists">
+                    <div class="row">
+                        <div class="col-md-3 left-col hidden-sm hidden-xs"></div>
+                        <div class="col-md-9 right-col">
+                            <div class="row promocode">
+                                <div class="form-group text-center">
+                                    <label data-bind="translate: 'promoCode'" data-toggle="collapse" data-target="#promo-code" aria-expanded="false" aria-controls="promo-code"></label>
+
+                                    <div class="collapse in" id="promo-code">
+                                        <div class="col-xs-6 col-xs-offset-3">
+                                            <div data-bind="visible: hasMessage()">
+                                                <div data-bind="if: parseInt(message().id()) == 3001" class="message">
+                                                    <p data-bind="css: 'alert alert-' + (message().severity() == 'error' ? 'danger' : message().severity())">
+                                                        <span data-bind="translate: message().text()"></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="form-control" type="text" data-bind="value: couponCode, translate: { placeholder : 'enterPromoCode' }">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3 left-col hidden-sm hidden-xs"></div>
+                    <div class="col-md-9 right-col">
+                        <div class="step1-submit-holder text-center">
+                            <button type="submit" class="btn btn-primary" data-bind="click: validate, enable: allowSubmit, translate: 'viewAvailableRoomsButton'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

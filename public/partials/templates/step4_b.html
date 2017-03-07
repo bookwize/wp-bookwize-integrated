@@ -1,0 +1,241 @@
+<div class="container step4-content">
+
+	<div data-bind="visible: ready()" style="display: none;">
+
+		<div class="col-xs-10 col-xs-offset-1">
+
+			<div data-bind="with: reservation">
+
+				<!-- ko template: { name: 'step4-reservation-info' } --><!-- /ko -->
+
+				<section class="col-md-12 text-policy clearfix">
+					<article class="col-md-12">
+						<header data-bind="translate: 'cancellationPolicy'"></header>
+						<div class="body" data-bind="html: reservationTerms"></div>
+					</article>
+
+					<!-- ko if: step1.hotel().settings.checkInHour != '' && step1.hotel().settings.checkOutHour != '' -->
+					<article class="col-md-12">
+						<header data-bind="translate: 'usefulInformation'"></header>
+						<div class="body">
+							<p><span data-bind="translate: 'checkInTime'"></span>: <span
+									data-bind="text: step1.hotel().settings.checkInHour"></span></p>
+							<p><span data-bind="translate: 'checkOutTime'"></span>: <span
+									data-bind="text: step1.hotel().settings.checkOutHour"></span></p>
+						</div>
+					</article>
+					<!-- /ko -->
+				</section>
+				<div class="clearfix"></div>
+			</div>
+
+			<!-- ko template: { name: 'step4-hotel-info' } --><!-- /ko -->
+
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
+<script type="text/html" id="step4-reservation-info">
+	<div class="row">
+		<section class="reservation">
+
+			<header class="reservation-title text-center hidden-print" data-bind="html: headerText"></header>
+
+			<div class="visible-print-block text-center" data-bind="title : header.name">
+				<img data-bind="visible: header.showLogo(), attr: {src: header.logo() + '?width=90&height=110', alt : header.name}"/>
+				<span data-bind="text: name, visible: !header.showLogo()"></span>
+			</div>
+
+			<button class="print hidden-print" onclick="window.print()"><i class="glyphicon glyphicon-print"></i>
+			</button>
+
+			<div class="horizontal-line-arrow">
+				<div class="arrow"></div>
+			</div>
+
+			<aside class="info-text text-center">
+				<header data-bind="translate: 'reservationStatus.' + status()"></header>
+				<p data-bind="translate: 'reservationSuccessInfo',  formatData: [customer.email]"></p>
+			</aside>
+
+			<div class="customer">
+				<div class="clearfix">
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'bookingNumber'"></div>
+						<div class="text" data-bind="text: code"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'pinCode'"></div>
+						<div class="text" data-bind="text: id"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'arrival'"></div>
+						<div class="text" data-bind="date: checkIn, dateFormat: 'DD/MM/YYYY'"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'departure'"></div>
+						<div class="text" data-bind="date: checkOut, dateFormat: 'DD/MM/YYYY'"></div>
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'fullName'"></div>
+						<div class="text" data-bind="text: customer.fullName"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'email'"></div>
+						<div class="text" data-bind="text: customer.email"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'telephone'"></div>
+						<div class="text" data-bind="text: customer.phone"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="sep"></div>
+
+			<div class="clearfix">
+
+				<section data-bind="foreach: rooms" class="reservation-rooms">
+
+					<article class="room clearfix">
+						<div class="clearfix room-index">
+							<div class="label">
+								<span data-bind="translate: 'room'"></span> <span data-bind="text: $index()+1"></span>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<header class="title" data-bind="text: name"></header>
+						</div>
+						<div class="col-xs-2 guests">
+							<span data-bind="text: adults"></span>
+
+							<!-- ko if: adults == 1 -->
+							<span data-bind="translate: 'adult'"></span>
+							<!-- /ko -->
+							<!-- ko if: adults > 1 -->
+							<span data-bind="translate: 'adults'"></span>
+							<!-- /ko -->
+							<!-- ko if: children > 0 -->
+							,<span data-bind="text: children"></span> <span data-bind="translate: 'children'"></span>
+							<!-- /ko -->
+							<!-- ko if: infants > 0 -->
+							,<span data-bind="text: infants"></span> <span data-bind="translate: 'infants'"></span>
+							<!-- /ko -->
+						</div>
+						<div class="col-xs-2 rateplan">
+							<!-- ko if: ratePlanId == 0 -->
+							<span data-bind="translate: 'standardRate'"></span>
+							<!-- /ko -->
+							<!-- ko if: ratePlanId > 0 -->
+							<span data-bind="text: ratePlanName"></span>
+							<!-- /ko -->
+						</div>
+						<div class="col-xs-4 text-right price">
+							<span data-bind="money: totalCost"></span>
+						</div>
+					</article>
+
+				</section>
+
+			</div>
+
+			<div class="sep"></div>
+
+			<div class="clearfix" data-bind="visible: supplements.length > 0">
+
+				<section class="reservation-supplements">
+					<div class="clearfix">
+						<div class="col-xs-4">
+							<div class="label" data-bind="translate: 'extraSupplements'"></div>
+						</div>
+					</div>
+					<div data-bind="foreach: supplements">
+						<article class="supplement clearfix">
+							<div class="col-xs-4">
+								<header class="title" data-bind="text: name"></header>
+							</div>
+							<div class="col-xs-2 quantity">
+								&times;
+								<span data-bind="text: quantity()"></span>
+							</div>
+
+							<div class="col-xs-6 text-right price" data-bind="money: totalPrice()"></div>
+						</article>
+					</div>
+				</section>
+
+			</div>
+
+			<div class="clearfix">
+
+				<div class="col-xs-3 pull-right">
+
+					<aside class="reservation-totals">
+
+						<div class="clearfix total">
+							<div class="pull-left">
+								<div class="label"><span data-bind="translate: 'total'"></span> :</div>
+							</div>
+							<div class="pull-right price text-right">
+								<div data-bind="money: totalCost"></div>
+							</div>
+						</div>
+
+					</aside>
+
+				</div>
+
+			</div>
+
+		</section>
+
+	</div>
+</script>
+<script type="text/html" id="step4-hotel-info">
+
+	<div class="row">
+
+		<section class="hotel-info">
+
+			<header class="title text-center" data-bind="translate: 'hotelInformation'"></header>
+
+			<div class="hotel-contact-info">
+				<div class="clearfix">
+					<div class="col-xs-3 hidden-print">
+						<img alt="Hotel Logo" data-bind="attr: { src : hotel().logo }" class="img-responsive">
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'address'"></div>
+						<div class="text" data-bind="html: hotel().address.street"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'telephone'"></div>
+						<div class="text" data-bind="text: hotel().address.phone"></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="label" data-bind="translate: 'email'"></div>
+						<div class="text" data-bind="text: hotel().email"></div>
+					</div>
+				</div>
+			</div>
+
+		</section>
+
+		<div class="google-map">
+			<div class="map" id="map" data-bind="map: googleMap"></div>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<footer class="thank-you-message" data-bind="with: reservation">
+
+			<p data-bind="translate: 'thankYouMessage', formatData: [customer.fullName]"></p>
+
+		</footer>
+
+	</div>
+</script>

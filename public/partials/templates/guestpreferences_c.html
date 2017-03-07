@@ -1,0 +1,100 @@
+<div class="navbar yamm booking-process" data-bind="if: hotel">
+    <div class="container" data-bind="if: ready()">        <div class="row">
+            <div class="well">
+                <div class="collapse navbar-collapse no-padding">
+                    <ul class="nav navbar-nav customer-request customer-request-b">
+                        <li class="dropdown">
+                            <label data-bind="translate: 'planYourStay'"></label>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span id="dt_checkIn" data-bind="date: checkIn, dateFormat: 'DD/MM/YY'"></span> -
+                                <span data-bind="date: checkOut, dateFormat: 'DD/MM/YY'"></span>
+                                <span class="nights">
+                                    (
+                                    <span data-bind="text: nights"></span>
+
+                                    <span  data-bind="visible: nights() == 1">
+                                        <span data-bind="translate: 'night'"></span>
+                                    </span>
+                                    <span data-bind="visible: nights() > 1">
+                                        <span data-bind="translate: 'nights'"></span>
+                                    </span>
+                                    )
+                                </span>
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown">
+
+                            <label data-bind="translate: 'guests'"></label>
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span data-bind="text: requestedRooms().length"></span>
+
+                                <span data-bind="visible: requestedRooms().length == 1">
+                                    <span data-bind="translate: 'room'"></span>
+                                </span>
+                                <span data-bind="visible: requestedRooms().length > 1">
+                                    <span data-bind="translate: 'rooms'"></span>
+                                </span>,
+
+                                <span data-bind="text: totalGuests()"></span>
+                                <span data-bind="visible: totalGuests() == 1">
+                                    <span data-bind="translate: 'guest'"></span>
+                                </span>
+                                <span data-bind="visible: totalGuests() > 1">
+                                    <span data-bind="translate: 'guests'"></span>
+                                </span>
+
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+
+                        <li class="dropdown promocode" data-bind="visible: couponExists">
+
+                            <label data-bind="translate: 'Coupon code'"></label>
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="text" data-bind="translate: 'promoCode'"></span>
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+
+                        <li data-bind="visible: requestedRooms().length == 1" class="dropdown">
+
+                            <label data-bind="translate: 'selectMealPlan'"></label>
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="text" data-bind="translate: board().name"></span>
+                                <span class="caret"></span>
+                            </a>
+
+                        </li>
+
+                        <li data-bind="if: bookingProcess().roomsCost() > 0" class="dropdown total-cost">
+
+                            <label data-bind="translate: 'total'"></label>
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span data-bind="visible: bookingProcess().roomsCostWithoutDiscount() > bookingProcess().roomsCost(), money: bookingProcess().roomsCostWithoutDiscount()" style="text-decoration: line-through;"></span>
+                                <span data-bind="money: bookingProcess().roomsCost()"></span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div id="GuestPreferences-Step1"></div>
+                <script type="text/html" data-target="#GuestPreferences-Step1" src="partials/templates/step1_preferences.html">
+                </script>
+
+            </div>
+        </div>
+
+    </div>
+</div>

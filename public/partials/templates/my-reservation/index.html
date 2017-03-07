@@ -1,0 +1,50 @@
+<div class="container">
+	<div class="clearfix">
+		<div class="col-xs-12">
+
+			<div class="myreservation-content" data-bind="if: ready()">
+
+				<script id="IBEValidationMessage" type="text/html">
+					<div class="alert alert-danger validation-message" data-bind="validationMessage: field"></div>
+				</script>
+
+				<div data-bind="visible: !isAuthenticated()">
+
+					<div id="Login"></div>
+					<script type="text/html" data-target="#Login" src="partials/templates/my-reservation/login-form.html"></script>
+
+				</div>
+
+				<div data-bind="if: reservation(), visible: isAuthenticated()">
+
+					<div id="MyReservationLoogedIn"></div>
+					<script type="text/html" data-target="#MyReservationLoogedIn" src="partials/templates/my-reservation/reservation.html"></script>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div data-bind="if: hotel" class="modal fade" id="TermsConditions" tabindex="-1" role="dialog" aria-labelledby="TermsConditionsHeader" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="TermsConditionsHeader" data-bind="translate: 'termsConditions'"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="body" data-bind="html: $root.hotel().termsConditions"></div>
+			</div>
+			<div class="modal-footer clearfix">
+				<div class="pull-left">
+					<button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="translate: 'disagree', click: function(){ $root.customer().acceptTerms(false); }"></button>
+				</div>
+				<div class="pull-right">
+					<button type="submit" class="btn btn-success" data-dismiss="modal" data-bind="translate: 'agree', click: function(){ $root.customer().acceptTerms(true); }"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

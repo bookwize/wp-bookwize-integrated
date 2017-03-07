@@ -1,0 +1,368 @@
+<div class="step2-content">
+
+	<div class="container change-layout-holder" style="display: none;">
+		<ul class="change-layout">
+			<li class="active" data-layout="rows"><span><i class="fa fa-bars"></i></span></li>
+			<li data-layout="grid"><span><i class="fa fa-th"></i></span></li>
+		</ul>
+	</div>
+
+	<section data-template="partials/templates/guestpreferences_c.html" id="GuestPreferences"></section>
+
+	<div data-bind="visible: ready()" style="display: none">
+		<div class="container">
+			<div class="row">
+
+				<div data-bind="visible: hasMessage()" class="col-md-12">
+					<div class="message">
+						<p data-bind="css: 'alert alert-' + (message().severity() == 'error' ? 'danger' : message().severity())">
+							<span data-bind="text: message().text()"></span>
+						</p>
+					</div>
+				</div>
+
+				<div data-bind="if: hotel().availability() == IBE.Config.hotelAvailability.CannotHost">
+					<div class="message alert alert-danger">
+						<p data-bind="translate: 'cannotHost'"></p>
+						<p data-bind="translate: 'cannotHostInfo'"></p>
+					</div>
+					<div class="text-center">
+						<a class="btn btn-primary" href="?page=1" data-bind="translate:'searchAgain'"></a>
+					</div>
+				</div>
+
+				<div data-bind="if: hotel().availability() == IBE.Config.hotelAvailability.HotelIsClosed"
+				     class="text-center">
+					<div class="message alert alert-danger">
+						<p data-bind="translate: IBE.Utils.translate('hotelIsClosedFromTo').format( moment(IBE.Data.HotelInfo.info.closedDates[0].closedFrom).format('LL'), moment(IBE.Data.HotelInfo.info.closedDates[0].closedTo).format('LL') )"></p>
+					</div>
+					<a class="btn btn-primary" href="#Step1" data-bind="translate:'searchAgain'"></a>
+				</div>
+
+				<!-- ko if: showTabs() == false && hotel().availability() != IBE.Config.hotelAvailability.HotelIsClosed -->
+				<div class="message alert alert-danger">
+					<p data-bind="translate: 'noRoomsToHandleRequest'"></p>
+				</div>
+				<div class="text-center">
+					<a class="btn btn-primary" href="?page=1" data-bind="translate:'searchAgain'"></a>
+				</div>
+				<!-- /ko -->
+				<!-- ko if: showTabs -->
+				<div id="Tabs"
+				     data-bind="foreach: request().hotelResults(), roomSelectionTabs: '.tab-rooms', tabOptions: { selected: activeTabIndex(), active: activeTabIndex() }">
+					<ul data-bind="foreach: requestedRooms()" class="tab-rooms clearfix">
+						<li data-bind="click: $root.setRoomIndex, css: { 'col-md-5': $parent.requestedRooms().length <= 2, 'col-md-3': $parent.requestedRooms().length == 4, 'col-md-4': $parent.requestedRooms().length == 3 } "
+						    class="no-outline">
+
+							<a data-bind="attr: { href : '#tab-'+roomIndex() }"
+							   class="tab-link-btn no-outline col-xs-6">
+
+								<span data-bind="with: $root.selectedRooms" class="inner">
+
+									<span data-bind="foreach: $root.selectedRooms">
+										<span data-bind="visible: roomIndex() == $parents[1].roomIndex()">
+											<span class="room-index" class="text-center">
+												<span data-bind="translate: 'room'"></span> <span
+													data-bind="text: roomIndex()"></span>
+											</span>
+											<span class="room-title" data-bind="text: roomInfo().name"></span>
+											<span class="room-board" data-bind="text: board().name"></span> - <span
+												class="room-price" data-bind="money: cost"></span>
+										</span>
+									</span>
+
+									<span class="tab-select-board">
+										<span class="title">
+											<span data-bind="visible: $parents[1].requestedRooms().length == 1"
+											      class="room-select-mealplan">
+												<span data-bind="translate: 'label.selectMealPlan'"></span>
+											</span>
+											<span data-bind="visible: $parents[1].requestedRooms().length > 1">
+												<span class="select-room">
+													<span data-bind="if: $root.activeRoomIndex() == $parent.roomIndex()">
+														<span data-bind="translate: 'selectRoom'"></span> <span
+															data-bind="text: $parent.roomIndex()"></span>
+													</span>
+													<span data-bind="ifnot: $root.activeRoomIndex() == $parent.roomIndex()">
+														<span data-bind="translate: 'room'"></span> <span
+															data-bind="text: $parent.roomIndex()"></span>
+													</span>
+
+												</span>
+											</span>
+										</span>
+									</span>
+
+								</span>
+
+							</a>
+
+							<div class="form-group">
+								<select class="form-control"
+								        data-bind="options: $root.boards, optionsText: 'name', optionsValue: 'boardType', value: $root.request().preferredBoard"></select>
+							</div>
+
+							<div class="mealplan-popover" data-bind="visible: $root.boardTypeInfo().description != ''">
+								<a href="#" tabindex="0"
+								   data-bind="popover: { title : $root.boardTypeInfo().name, content : $root.boardTypeInfo().description }">
+									<i class="fa fa-info-circle"></i>
+								</a>
+							</div>
+
+						</li>
+					</ul>
+
+					<div data-bind="foreach: requestedRooms()">
+
+						<div class="room-tab" data-bind="attr: { id : 'tab-'+roomIndex() }">
+
+							<div class="alert alert-danger" data-bind="visible: !isVisible()">
+								<span data-bind="translate: 'noRoomsToHandleRequest'"></span>
+							</div>
+
+							<section data-bind="foreach: roomResults()" class="room-list layout-rows clearfix">
+
+								<article class="room-row clearfix"
+								         data-bind="visible: isVisible, attr: { 'data-room-index' : roomIndex(), 'data-room-id' : roomId() }, css : {'available-upon-request' : IBE.Config.roomAvailability[availabilityStatus] == IBE.Config.roomAvailability['UponRequest']}">
+									<div class="inner clearfix">
+
+										<div class="col-md-3 no-padding row-left" data-target="room-info">
+
+											<div class="best-value"
+											     data-bind="visible: $parent.isBestValue().id == roomId()">
+												<span data-bind="translate: 'bestValue'"></span>
+											</div>
+
+											<div data-bind="if: info().photos[0]">
+												<div data-bind="with: info().photos[0] ">
+													<div class="room-thumb"
+													     data-bind="backgroundImage: url, backgroundImageOptions: {width: $root.roomImageWidth, height: $root.roomImageHeight, mode:'crop'}, click: $root.popup().toggle.bind($data, $parent)"></div>
+												</div>
+											</div>
+
+											<div data-bind="ifnot: info().photos[0]">
+												<div class="room-thumb"
+												     data-bind="backgroundImage: IBEConfig.roomBackgroundImage, backgroundImageOptions: {width: $root.roomImageWidth, height: $root.roomImageHeight, mode:'crop'}, click: $root.popup().toggle.bind($data, $data)"></div>
+											</div>
+
+										</div>
+
+										<div class="col-md-7 no-padding row-center">
+											<!-- data-target="room-info" -->
+											<header class="room-header"
+											        data-bind="click: $root.popup().toggle.bind($data), modal: { target: '#RoomPopUp', menu: 'room-info' }">
+
+												<span data-bind="text: info().name, attr: {lang: $root.lang}"></span>
+												<span data-bind="visible: alternativeBoard()">
+													<span class="instead-of-board">
+														<i class="fa fa-exclamation-circle"></i>
+														<span data-bind="translate: 'antautou'"></span>: <span
+															data-bind="text: boardName()"></span>
+													</span>
+												</span>
+
+											</header>
+
+											<aside class="room-availability-restrictions"
+											       data-bind="if: availabilityRestrictions.length > 0">
+												<ul data-bind="foreach: availabilityRestrictions">
+													<!-- ko foreach: text -->
+													<li data-bind="html: $data"></li>
+													<!-- /ko -->
+												</ul>
+											</aside>
+
+											<span class="room-info anim"
+											      data-bind="translate: 'roomInfo', click: $root.popup().toggle.bind($data)"
+											      data-target="room-info"></span>
+
+											<section data-bind="foreach: rateplans" class="table-list">
+
+												<div data-bind="visible: isVisible, click: $parent.setRatePlanId, attr:{'data-rateplan-id' : ratePlanId, 'data-room-id' : $parent.roomId() }, css: { 'active' : ratePlanId() == $parent.ratePlanId() }"
+												     class="list-row" data-target="room-rateplans">
+													<div class="clearfix list-row-content">
+														<div class="row">
+
+															<div class="col-sm-7 rateplan-name">
+																<div class="rateplan-view-btn"
+																     data-target="room-rateplans"
+																     data-bind="click: $root.popup().toggle.bind($data, $parent), attr:{'data-rateplan-id' : ratePlanId, 'data-room-id' : $parent.roomId() }, translate: 'button.View'"></div>
+																<span class="text" data-bind="text: info().name"></span>
+																<span class="label label-success label-free-cancellation"
+																      data-bind="visible: info().isFreeCancellation, translate: 'freeCancellation'"></span>
+
+															</div>
+
+															<div class="col-sm-5 text-right">
+																<span data-bind="foreach: roomBoards">
+																	<span data-bind="visible: isSelected">
+																		<span class="list-row-price"
+																		      data-bind="visible: showPrices">
+																			<span class="bar badge"
+																			      data-bind="visible: ($parents[1].bestRatePlanId() === ratePlanId && $parents[1].rateplans().length > 1), translate: 'bestAvailableRate'"></span>
+
+																			<!-- ko if: $parent.price() < $parent.priceWithoutDiscount() -->
+																			<span style="text-decoration: line-through;"
+																			      class="price price--without-discount"
+																			      data-bind="money: $parent.priceWithoutDiscount"></span>
+																			<!-- /ko -->
+
+																			<span class="price"
+																			      data-bind="money: $parent.price"></span>
+																		</span>
+																	</span>
+																</span>
+															</div>
+
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+
+										<div class="col-md-2 no-padding row-right">
+											<aside class="room-action">
+
+												<div class="room-prices" data-bind="visible: showPrices()">
+
+													<div class="daily">
+														<span class="price"
+														      data-bind="visible: (price() > 0), money: price"></span>
+														<span class="text"
+														      data-bind="visible: (price() <= 0), translate: 'rateNotAvailable'"></span>
+													</div>
+
+													<div data-bind="visible: $root.bookingProcess().nights() > 1"
+													     class="total">
+														<span class="price" data-bind="visible: price() > 0">
+															<p class="help-text" data-bind="translate: 'adr'"></p>
+															<span data-bind="money: averageDailyRate"></span>
+														</span>
+													</div>
+
+												</div>
+
+												<div data-bind="visible: bookingAction() > 0" class="booking-action">
+													<div class="book-room-button"
+													     data-bind="css: { 'remaining-rooms-active' : (availableRooms > 0 && availableRooms <= 3) }">
+
+														<span data-bind="visible: bookingAction() == 3"
+														      class="form-group">
+															<button class="btn btn-book col-md-10 col-md-offset-1"
+															        data-bind="click: $root.selectRoom, css: { 'last-room' : availableRooms == 1}">
+																<span data-bind="translate: 'button.Book'"></span>
+																<!--<span data-bind="visible: availableRooms == 1" class="info">
+																	<span class="corner"></span>
+																	<span class="text" data-bind="translate: 'lastRoom'"></span>
+																</span>-->
+															</button>
+														</span>
+
+														<span data-bind="visible: bookingAction() == 2"
+														      class="form-group">
+															<button class="btn btn-request col-md-10 col-md-offset-1"
+															        data-bind="click: $root.selectRoom, css: { 'last-room' : availableRooms == 1}">
+																<span data-bind="translate: 'button.Request'"></span>
+																<!--<span data-bind="visible: availableRooms == 1" class="info">
+																	<span class="corner"></span>
+																	<span class="text" data-bind="translate: 'lastRoom'"></span>
+																</span>-->
+															</button>
+														</span>
+
+														<span data-bind="visible: bookingAction() == 1"
+														      class="form-group">
+															<button class="btn btn-call-us col-md-10 col-md-offset-1 call-us-btn"
+															        data-bind="click: function(){$('#CallUsPopUp').modal('show');}, css: { 'last-room' : availableRooms == 1}">
+																<span data-bind="translate: 'button.CallUs'"></span>
+																<!--<span data-bind="visible: availableRooms == 1" class="info">
+																	<span class="corner"></span>
+																	<span class="text" data-bind="translate: 'lastRoom'"></span>
+																</span>-->
+															</button>
+														</span>
+
+													</div>
+													<div data-bind="visible: availableRooms > 0 && availableRooms <= 3">
+														<div class="col-md-10 col-md-offset-1 remaining-rooms">
+															<span data-bind="text: availableRooms"></span>
+															<!-- ko if: availableRooms == 1 -->
+															<span data-bind="translate: 'roomRemaining'"></span>
+															<!-- /ko -->
+															<!-- ko if: availableRooms > 1 -->
+															<span data-bind="translate: 'roomsRemaining'"></span>
+															<!-- /ko -->
+														</div>
+													</div>
+												</div>
+
+											</aside>
+
+											<div class="available-upon-request-text">
+												<span data-bind="translate: 'roomAvailableUponRequest'"></span>
+											</div>
+
+										</div>
+
+									</div>
+								</article>
+
+								<!-- ko if: isFiltered() -->
+								<div class="room-separator"></div>
+								<!-- /ko -->
+
+							</section>
+
+						</div>
+					</div>
+
+				</div>
+				<!-- /ko -->
+			</div>
+		</div>
+	</div>
+
+	<div id="CallUsPopUp" class="modal fade popup" tabindex="-1" role="dialog" aria-labelledby="CallUsPopUp"
+	     aria-hidden="true">
+		<div class="modal-vertical-centered">
+			<div class="container">
+
+				<div class="row clearfix">
+
+					<div class="popup-call-us  col-xs-8 col-xs-offset-2">
+
+						<section class="col-xs-12">
+
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+									class="fa fa-times"></i></button>
+
+							<article class="text-center col-xs-10 col-xs-offset-1">
+
+								<header class="title" data-bind="text: hotelInfo().name"></header>
+
+								<div class="body">
+
+									<div data-bind="translate: 'button.CallUs'" class="body-title"></div>
+
+									<div class="sep"></div>
+
+									<div class="body-text">
+										<a data-bind="attr: { href: 'tel:' + hotelInfo().address.phone}, html: hotelInfo().address.phone"></a>
+									</div>
+
+								</div>
+
+							</article>
+
+						</section>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div id="RoomPopUp" class="modal fade popup" tabindex="-1" role="dialog" aria-labelledby="RoomPopUp"></div>
+<script type="text/html" data-target="#RoomPopUp" src="partials/templates/popup_b.html"></script>
