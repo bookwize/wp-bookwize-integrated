@@ -1,5 +1,5 @@
 # Bookwize Integrated
-Format: ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/bookwize-wordpress-plugin.png?raw=true)
+![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/bookwize-wordpress-plugin.png?raw=true)
 Contributors: <a href="https://www.bookwize.com/" taget="_blank">Bookwize.com</a>
 
 Requires at least: 4.7.2
