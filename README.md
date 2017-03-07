@@ -1,8 +1,12 @@
 # Bookwize Integrated
 Contributors: Bookwize.com
+
 Tags: bookwize, bookwize Integrated, Booking Engine
+
 Requires at least: 4.7.2
+
 Tested up to: 4.7.2
+
 Integrate Bookwize Hotel Booking Engine in your WordPress website and let visitors check availability and rates and make a booking directly from your website.
 
 ## Description
@@ -18,7 +22,7 @@ An SSL Certificate is also required.
 * Create a new page and select Bookwize Integrated for Page Type, give a title and save the page.
 * To set a My Reservation Page you have to create a new page and add the shortcode [bw_myreservation].
 * In order to set a currency selector you have to add the shortcode [bw_currency].
-> Important -- Plugin pages should have ssl.
+* Important -- Plugin pages should have ssl.
 
 ## Frequently Asked Questions 
 ### How can I get my API Key, Hotel ID and Hotel Url ?
