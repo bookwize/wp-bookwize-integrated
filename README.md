@@ -32,6 +32,7 @@ Of course, you may make any change that you may need through changing the CSS co
 Yes, of course; the two plugins can be combined seamlessly.
 
 ## Screenshots
-1.
-2.
-3.
+1. ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot1.png?raw=true?raw=true)
+2. ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot2.png?raw=true?raw=true)
+3. ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot3.png?raw=true?raw=true) 
+4. ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot4.png?raw=true?raw=true)
