@@ -1,0 +1,134 @@
+@media print {
+    .ibe #Header, .ibe .main-header {
+        display: none
+    }
+    .ibe #Footer {
+        min-height: auto;
+        padding: 0
+    }
+    .ibe #Footer .contact-info {
+        display: block;
+        width: 100%;
+        font-size: 11px;
+        text-align: center
+    }
+    .ibe #Footer .contact-info h3 {
+        margin: 10px 0;
+        font-size: 13px
+    }
+    .ibe .container {
+        max-width:100%;
+    }
+    .ibe .label {
+        border: none
+    }
+    .ibe .myreservation-content {
+        margin: 0
+    }
+    .ibe .myreservation-content .reservation-title {
+        padding: 0 0 15px 0
+    }
+    .ibe .myreservation-content .label, .ibe .myreservation-content .text {
+        display: inline-block;
+        *display: inline;
+        vertical-align: middle;
+        zoom: 1;
+        margin: 0
+    }
+    .ibe .myreservation-content .text {
+        position: relative;
+        top: -10px;
+        left: 20px
+    }
+    .ibe .myreservation-content .customer {
+        margin: 0 -15px
+    }
+    .ibe .horizontal-line-arrow {
+        margin: 5px 0
+    }
+    .ibe .reservation .reservation-rooms, .ibe .reservation .reservation-supplements {
+        padding: 15px 0 0 0
+    }
+    .ibe .reservation .reservation-rooms .supplement, .ibe .reservation .reservation-supplements .supplement, .ibe .reservation .reservation-rooms .room, .ibe .reservation .reservation-supplements .room {
+        padding: 5px 0
+    }
+    .ibe .reservation .reservation-rooms .supplement .title, .ibe .reservation .reservation-supplements .supplement .title, .ibe .reservation .reservation-rooms .room .title, .ibe .reservation .reservation-supplements .room .title, .ibe .reservation .reservation-rooms .supplement .guests, .ibe .reservation .reservation-supplements .supplement .guests, .ibe .reservation .reservation-rooms .room .guests, .ibe .reservation .reservation-supplements .room .guests, .ibe .reservation .reservation-rooms .supplement .rateplan, .ibe .reservation .reservation-supplements .supplement .rateplan, .ibe .reservation .reservation-rooms .room .rateplan, .ibe .reservation .reservation-supplements .room .rateplan, .ibe .reservation .reservation-rooms .supplement .price, .ibe .reservation .reservation-supplements .supplement .price, .ibe .reservation .reservation-rooms .room .price, .ibe .reservation .reservation-supplements .room .price, .ibe .reservation .reservation-rooms .supplement .supplement-name, .ibe .reservation .reservation-supplements .supplement .supplement-name, .ibe .reservation .reservation-rooms .room .supplement-name, .ibe .reservation .reservation-supplements .room .supplement-name, .ibe .reservation .reservation-rooms .supplement .quantity, .ibe .reservation .reservation-supplements .supplement .quantity, .ibe .reservation .reservation-rooms .room .quantity, .ibe .reservation .reservation-supplements .room .quantity {
+        display: inline-block;
+        font-size: 14px
+    }
+    .ibe .reservation .reservation-rooms .supplement .title, .ibe .reservation .reservation-supplements .supplement .title, .ibe .reservation .reservation-rooms .room .title, .ibe .reservation .reservation-supplements .room .title, .ibe .reservation .reservation-rooms .supplement .guests, .ibe .reservation .reservation-supplements .supplement .guests, .ibe .reservation .reservation-rooms .room .guests, .ibe .reservation .reservation-supplements .room .guests, .ibe .reservation .reservation-rooms .supplement .quantity, .ibe .reservation .reservation-supplements .supplement .quantity, .ibe .reservation .reservation-rooms .room .quantity, .ibe .reservation .reservation-supplements .room .quantity, .ibe .reservation .reservation-rooms .supplement .rateplan, .ibe .reservation .reservation-supplements .supplement .rateplan, .ibe .reservation .reservation-rooms .room .rateplan, .ibe .reservation .reservation-supplements .room .rateplan {
+        font-family: 'open_sansregular', Arial, Helvetica, sans-serif;
+        font-size: 13px;
+        line-height: 13px;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        text-transform: none;
+        color: #333
+    }
+    .ibe .reservation .reservation-totals .grand-total-label {
+        font-weight: normal;
+        display: inline-block;
+        position: relative;
+        top: 0
+    }
+    .ibe .reservation .reservation-totals .price {
+        display: inline-block;
+        font-size: 16px
+    }
+    .ibe .theme-d .myreservation-content {
+        margin-top: 0;
+        position: relative;
+        top: -130px
+    }
+    .ibe .theme-d .myreservation-content .label, .ibe .theme-d .myreservation-content .text {
+        margin: 0 0 10px 0;
+        text-align: left
+    }
+    .ibe .theme-d .myreservation-content .label {
+        width: 30%
+    }
+    .ibe .theme-d .myreservation-content .text {
+        top: 0;
+        padding: 0;
+        font-size: 12px
+    }
+    .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .room-index, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .room-index, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .title, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .title, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .guests, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .guests, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .rateplan, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .rateplan, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .price, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .price, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .supplement-name, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .supplement-name, .ibe .theme-d .myreservation-content .reservation .reservation-rooms .room .quantity, .ibe .theme-d .myreservation-content .reservation .reservation-supplements .room .quantity {
+        padding: 0;
+        margin-right: 15px
+    }
+    .ibe .theme-d .myreservation-content .reservation .reservation-totals .grand-total-label, .ibe .theme-d .myreservation-content .reservation .reservation-totals .price {
+        padding: 0;
+        margin-right: 15px
+    }
+    .ibe .theme-d .myreservation-content .reservation .reservation-totals .grand-total-label {
+        width: 30%;
+        font-size: 10px
+    }
+    .ibe .theme-d .myreservation-content .reservation .terms-conditions-holder {
+        page-break-after: always
+    }
+    .ibe .theme-d .myreservation-content .reservation .terms-conditions-holder, .ibe .theme-d .myreservation-content .reservation .terms-conditions-holder>div {
+        padding: 0
+    }
+    .ibe .theme-d .myreservation-content .reservation .terms-conditions-holder .title, .ibe .theme-d .myreservation-content .reservation .terms-conditions-holder>div .title {
+        margin: 0 0 10px 0
+    }
+    .ibe .theme-d .myreservation-content .reservation.hotel-info {
+        padding: 0
+    }
+    .ibe .theme-d .myreservation-content .hotel-contact-info>div {
+        padding: 0
+    }
+    .ibe .theme-d .myreservation-content .hotel-contact-info .text {
+        margin: 0;
+        position: relative;
+        top: -2px
+    }
+    html, body {
+        height: 100%;
+        min-height: 100%;
+        overflow: visible;
+        font-size: 12px
+    }
+}
