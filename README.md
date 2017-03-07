@@ -32,8 +32,8 @@ Of course, you may make any change that you may need through changing the CSS co
 Yes, of course; the two plugins can be combined seamlessly.
 
 ## Screenshots
-1. Admin Panel
-![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot1.png?raw=true?raw=true)
+1. Reservation first step
+![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot2.png?raw=true?raw=true)
 
 2. Reservation second step
 ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot3.png?raw=true?raw=true) 
