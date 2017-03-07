@@ -35,11 +35,8 @@ Yes, of course; the two plugins can be combined seamlessly.
 1. Admin Panel
 ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot1.png?raw=true?raw=true)
 
-2. Reservation first step
-![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot2.png?raw=true?raw=true)
-
-3. Reservation second step
+2. Reservation second step
 ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot3.png?raw=true?raw=true) 
 
-4. Reservation third step
+3. Reservation third step
 ![Alt Text](https://github.com/bookwize/wp-bookwize-integrated/blob/master/public/img/screenshot4.png?raw=true?raw=true)
