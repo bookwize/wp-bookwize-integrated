@@ -284,6 +284,7 @@ var routes = {
                             if ($el.is(":hidden")) {
                                 $("#GuestPreferences-Step1").stop().slideDown();
                                 $("#GuestPreferences-Step1").addClass("open");
+                                $('.ibe .btn-primary').css('background', IBE.Config.bwButtonColor);
                             } else {
                                 $("#GuestPreferences-Step1").stop().slideUp();
                                 $("#GuestPreferences-Step1").removeClass("open");
