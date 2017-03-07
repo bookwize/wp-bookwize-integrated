@@ -30,3 +30,8 @@ Contact Bookwize Support Team on support@bookwize.com. Please note that you the 
 Of course, you may make any change that you may need through changing the CSS code.
 ### Can I combine this plugin with Bookwize Booking Form?
 Yes, of course; the two plugins can be combined seamlessly.
+
+## Screenshots
+1.
+2.
+3.
