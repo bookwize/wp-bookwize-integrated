@@ -11,14 +11,14 @@ Website visitors are able to complete a reservation without living your hotel we
 An SSL Certificate is also required.
 
 ## Installation
-Install the plugin by uploading the zip file (Plugins > Add New > Upload)
-Activate the plugin through the Plugins menu in WordPress
-Go to the settings page of the plugin to setup the form
-Add the credentials provided by Bookwize Support (API Key, Hotel ID, Hotel Url).
-Create a new page and select Bookwize Integrated for Page Type, give a title and save the page.
-To set a My Reservation Page you have to create a new page and add the shortcode [bw_myreservation].
-In order to set a currency selector you have to add the shortcode [bw_currency].
-Important -- Plugin pages should have ssl.
+* Install the plugin by uploading the zip file (Plugins > Add New > Upload)
+* Activate the plugin through the Plugins menu in WordPress
+* Go to the settings page of the plugin to setup the form
+* Add the credentials provided by Bookwize Support (API Key, Hotel ID, Hotel Url).
+* Create a new page and select Bookwize Integrated for Page Type, give a title and save the page.
+* To set a My Reservation Page you have to create a new page and add the shortcode [bw_myreservation].
+* In order to set a currency selector you have to add the shortcode [bw_currency].
+> Important -- Plugin pages should have ssl.
 
 ## Frequently Asked Questions 
 ### How can I get my API Key, Hotel ID and Hotel Url ?
