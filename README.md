@@ -1,6 +1,8 @@
 # Bookwize Integrated
 Contributors: <a href="https://www.bookwize.com/" taget="_blank">Bookwize.com</a>
+
 Requires at least: 4.7.2
+
 Tested up to: 4.7.2
 
 Integrate Bookwize Hotel Booking Engine in your WordPress website and let visitors check availability and rates and make a booking directly from your website.
